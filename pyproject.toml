@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simple-logger"
+version = "0.1.0"
+description = "Простая библиотека для логирования с цветным форматированием"
+readme = "README.md"
+authors = [
+    {name = "Alexey Simonov", email = "greengoblinalex@mail.ru"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.6"
+
+[project.urls]
+"Homepage" = "https://github.com/greengoblinalex/simple-logger"
+"Bug Tracker" = "https://github.com/greengoblinalex/simple-logger/issues"
