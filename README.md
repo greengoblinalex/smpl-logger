@@ -5,7 +5,7 @@
 ## Установка
 
 ```bash
-pip install simple-logger
+pip install git+https://github.com/greengoblinalex/simple-logger.git
 ```
 
 ## Использование
