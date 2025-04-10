@@ -32,7 +32,7 @@ logger = get_logger(
     name="my_app", 
     log_file="app.log",
     level="DEBUG",  # Уровень логирования
-    rotation_size=10 * 1024 * 1024,  # 10 МБ для ротации
-    backup_count=5  # Хранить 5 архивных файлов
+    rotation_size=5 * 1024 * 1024,  # 5 МБ для ротации
+    backup_count=3  # Хранить 3 архивных файла
 )
 ```
