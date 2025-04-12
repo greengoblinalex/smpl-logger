@@ -6,11 +6,11 @@ from logging.handlers import RotatingFileHandler
 
 LOG_CONFIG = {
     "LOG_DIR": Path(os.environ.get("LOG_DIR", "logs")),
-    "LEVEL": "INFO",
+    "LEVEL": os.environ.get("LOG_LEVEL", "INFO"),
     "FORMAT": "%(asctime)s | %(name)s | [%(levelname)s] | %(message)s",
     "DATE_FORMAT": "%Y-%m-%d %H:%M:%S",
-    "ROTATION_SIZE": 5 * 1024 * 1024,  # 5 mb
-    "BACKUP_COUNT": 3,
+    "ROTATION_SIZE": int(os.environ.get("LOG_ROTATION_SIZE", 5 * 1024 * 1024)),  # 5 mb
+    "BACKUP_COUNT": int(os.environ.get("LOG_BACKUP_COUNT", 3)),
     "ENCODING": "utf-8",
 }
 
