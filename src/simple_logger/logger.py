@@ -62,25 +62,39 @@ def get_logger(
         Настроенный объект Logger с обработчиками для консоли и файла (если указан).
 
     Notes:
-        - Если логгер с указанным именем уже существует и имеет обработчики,
-          возвращается существующий логгер без изменений.
+        - Проверяет существующие обработчики и не добавляет дубликаты.
         - Консольный вывод форматируется с цветовой подсветкой уровней логирования.
         - Файловый вывод (если указан) настраивается с ротацией по размеру.
+        - Отключает распространение сообщений к родительскому логгеру.
     """
     logger = logging.getLogger(name)
     level = level or LOG_CONFIG["LEVEL"]
     logger.setLevel(getattr(logging, level.upper()))
 
-    if logger.hasHandlers():
-        return logger
+    # Проверка наличия файлового обработчика с указанным именем файла
+    def has_file_handler(logger, log_file):
+        for handler in logger.handlers:
+            if isinstance(
+                handler, RotatingFileHandler
+            ) and handler.baseFilename.endswith(log_file):
+                return True
+        return False
 
-    console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setFormatter(
-        ColoredFormatter(fmt=LOG_CONFIG["FORMAT"], datefmt=LOG_CONFIG["DATE_FORMAT"])
-    )
-    logger.addHandler(console_handler)
+    # Добавляем консольный обработчик, если он отсутствует
+    if not any(
+        isinstance(h, logging.StreamHandler) and not isinstance(h, RotatingFileHandler)
+        for h in logger.handlers
+    ):
+        console_handler = logging.StreamHandler(sys.stdout)
+        console_handler.setFormatter(
+            ColoredFormatter(
+                fmt=LOG_CONFIG["FORMAT"], datefmt=LOG_CONFIG["DATE_FORMAT"]
+            )
+        )
+        logger.addHandler(console_handler)
 
-    if log_file:
+    # Добавляем файловый обработчик, если он указан и отсутствует
+    if log_file and not has_file_handler(logger, log_file):
         log_path = LOG_CONFIG["LOG_DIR"] / log_file
         log_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -96,5 +110,8 @@ def get_logger(
             )
         )
         logger.addHandler(file_handler)
+
+    # Отключаем распространение сообщений к родительскому логгеру
+    logger.propagate = False
 
     return logger
