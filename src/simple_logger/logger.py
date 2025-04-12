@@ -1,10 +1,11 @@
+import os
 import sys
 import logging
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
 
 LOG_CONFIG = {
-    "LOG_DIR": Path("logs"),
+    "LOG_DIR": Path(os.environ.get("LOG_DIR", "logs")),
     "LEVEL": "INFO",
     "FORMAT": "%(asctime)s | %(name)s | [%(levelname)s] | %(message)s",
     "DATE_FORMAT": "%Y-%m-%d %H:%M:%S",
