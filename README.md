@@ -13,8 +13,11 @@ pip install git+https://github.com/greengoblinalex/simple-logger.git
 ```python
 from simple_logger import get_logger
 
-# Логирование только в консоль
+# Можно передавать строку
 logger = get_logger("my_app")
+# или __name__ в качестве имени логгера
+logger = get_logger(__name__)
+
 logger.info("Это информационное сообщение")
 logger.error("Это сообщение об ошибке")
 
