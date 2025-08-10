@@ -1,76 +1,76 @@
 # Smpl Logger
 
-Простая библиотека для логирования с цветным форматированием и поддержкой ротации файлов.
+A simple logging library with colored output and file rotation support.
 
-## Установка
+## Installation
 
 ```bash
 pip install smpl-logger
 ```
 
-Или установка из исходного кода:
+Or install from source:
 
 ```bash
 pip install git+https://github.com/greengoblinalex/simple-logger.git
 ```
 
-## Использование
+## Usage
 
 ```python
 from smpl_logger import get_logger
 
-# Рекомендуется использовать __name__ в качестве имени логгера —
-# это удобно для структурирования логов в больших проектах
+# It is recommended to use __name__ as the logger name —
+# this is convenient for structuring logs in large projects
 logger = get_logger(__name__)
 
-# Также можно явно передать строку, например:
+# You can also explicitly pass a string, for example:
 # logger = get_logger("my_app")
-logger.info("Это информационное сообщение")
-logger.error("Это сообщение об ошибке")
+logger.info("This is an info message")
+logger.error("This is an error message")
 
-# Логирование в файл и консоль
+# Logging to file and console
 file_logger = get_logger(__name__, log_file="app.log")
-file_logger.info("Это сообщение будет в файле и в консоли")
+file_logger.info("This message will appear in both file and console")
 ```
 
-## Настройка
+## Configuration
 
-Вы можете настроить логгер, используя дополнительные параметры:
+You can configure the logger using additional parameters:
 
 ```python
 logger = get_logger(
-    name=__name__,  # Рекомендуется использовать __name__, но можно и строку
+    name=__name__,  # Recommended to use __name__, but you can use a string
     log_file="app.log",
-    level="DEBUG",  # Уровень логирования
-    rotation_size=5 * 1024 * 1024,  # 5 МБ для ротации
-    backup_count=3  # Хранить 3 архивных файла
+    level="DEBUG",  # Logging level
+    rotation_size=5 * 1024 * 1024,  # 5 MB for rotation
+    backup_count=3  # Keep 3 backup files
 )
 ```
 
-## Настройка через .env файл
+## Configuration via .env file
 
-Вы также можете настроить параметры логирования через файл `.env` в корне вашего проекта:
+You can also configure logging parameters via a `.env` file in your project root:
 
 ```
-LOG_DIR=logs                # Директория для хранения логов
-LOG_LEVEL=INFO              # Уровень логирования
-LOG_ROTATION_SIZE=5242880   # Размер для ротации файлов (5MB)
-LOG_BACKUP_COUNT=3          # Количество архивных файлов
+LOG_DIR=logs                # Directory for log files
+LOG_LEVEL=INFO              # Logging level
+LOG_ROTATION_SIZE=5242880   # File size for rotation (5MB)
+LOG_BACKUP_COUNT=3          # Number of backup files
 ```
 
-## Особенности
+## Features
 
-- 🎨 **Цветной вывод** - различные уровни логирования выделяются разными цветами
-- 🔄 **Ротация файлов** - автоматическая ротация логов при достижении максимального размера
-- ⚙️ **Гибкая настройка** - настройка через параметры функции или переменные окружения
-- 📦 **Легковесность** - без внешних зависимостей, использует только стандартную библиотеку Python
-- 🔧 **Простота использования** - минимальный код для начала работы
+- 🎨 **Colored output** - different log levels are highlighted with different colors
+- 🔄 **File rotation** - automatic log rotation when the file reaches the maximum size
+- ⚙️ **Flexible configuration** - configure via function parameters or environment variables
+- 📦 **Lightweight** - no external dependencies, uses only the Python standard library
+- 🔧 **Easy to use** - minimal code to get started
 
-## Пример цветного вывода
+## Example of colored output
 
-При использовании консольного логирования вы увидите:
-- 🟢 **INFO** - зеленый цвет для информационных сообщений
-- 🟡 **WARNING** - желтый цвет для предупреждений
-- 🔴 **ERROR** - красный цвет для ошибок
-- 🔵 **DEBUG** - голубой цвет для отладочной информации
-- 🟥 **CRITICAL** - красный фон для критических ошибок
+When using console logging, you will see:
+- 🟢 **INFO** - green for informational messages
+- 🟡 **WARNING** - yellow for warnings
+- 🔴 **ERROR** - red for errors
+- 🔵 **DEBUG** - cyan for debug information
+- 🟥 **CRITICAL** - red background for critical errors
