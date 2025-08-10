@@ -18,7 +18,7 @@ LOG_CONFIG["LOG_DIR"].mkdir(parents=True, exist_ok=True)
 
 
 class ColoredFormatter(logging.Formatter):
-    """Форматтер с цветным выводом для консоли"""
+    """Formatter with colored output for console"""
 
     COLORS = {
         "DEBUG": "\033[36m",  # Cyan
@@ -46,32 +46,32 @@ def get_logger(
     rotation_size: int = None,
     backup_count: int = None,
 ) -> logging.Logger:
-    """Создает и настраивает логгер.
+    """Creates and configures a logger.
 
     Args:
-        name: Имя логгера. Используя "root", вы настраиваете корневой логгер.
-        log_file: Имя файла для записи логов. Если None, логи пишутся только в консоль.
-        level: Уровень логирования (DEBUG, INFO, WARNING, ERROR, CRITICAL).
-              По умолчанию используется значение из LOG_CONFIG["LEVEL"].
-        rotation_size: Максимальный размер файла лога в байтах перед ротацией.
-              По умолчанию используется значение из LOG_CONFIG["ROTATION_SIZE"].
-        backup_count: Количество сохраняемых архивных файлов при ротации.
-              По умолчанию используется значение из LOG_CONFIG["BACKUP_COUNT"].
+        name: Logger name. Using "root" configures the root logger.
+        log_file: Log file name. If None, logs are written only to the console.
+        level: Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL).
+            By default, uses the value from LOG_CONFIG["LEVEL"].
+        rotation_size: Maximum log file size in bytes before rotation.
+            By default, uses the value from LOG_CONFIG["ROTATION_SIZE"].
+        backup_count: Number of backup files to keep during rotation.
+            By default, uses the value from LOG_CONFIG["BACKUP_COUNT"].
 
     Returns:
-        Настроенный объект Logger с обработчиками для консоли и файла (если указан).
+        Configured Logger object with handlers for console and file (if specified).
 
     Notes:
-        - Проверяет существующие обработчики и не добавляет дубликаты.
-        - Консольный вывод форматируется с цветовой подсветкой уровней логирования.
-        - Файловый вывод (если указан) настраивается с ротацией по размеру.
-        - Отключает распространение сообщений к родительскому логгеру.
+        - Checks for existing handlers and does not add duplicates.
+        - Console output is formatted with color highlighting for log levels.
+        - File output (if specified) is configured with size-based rotation.
+        - Disables propagation to parent loggers.
     """
     logger = logging.getLogger(name)
     level = level or LOG_CONFIG["LEVEL"]
     logger.setLevel(getattr(logging, level.upper()))
 
-    # Проверка наличия файлового обработчика с указанным именем файла
+    # Check for an existing file handler with the specified file name
     def has_file_handler(logger, log_file):
         for handler in logger.handlers:
             if isinstance(
@@ -80,7 +80,7 @@ def get_logger(
                 return True
         return False
 
-    # Добавляем консольный обработчик, если он отсутствует
+    # Add console handler if not present
     if not any(
         isinstance(h, logging.StreamHandler) and not isinstance(h, RotatingFileHandler)
         for h in logger.handlers
@@ -93,7 +93,7 @@ def get_logger(
         )
         logger.addHandler(console_handler)
 
-    # Добавляем файловый обработчик, если он указан и отсутствует
+    # Add file handler if specified and not present
     if log_file and not has_file_handler(logger, log_file):
         log_path = LOG_CONFIG["LOG_DIR"] / log_file
         log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -111,7 +111,7 @@ def get_logger(
         )
         logger.addHandler(file_handler)
 
-    # Отключаем распространение сообщений к родительскому логгеру
+    # Disable propagation to parent loggers
     logger.propagate = False
 
     return logger
