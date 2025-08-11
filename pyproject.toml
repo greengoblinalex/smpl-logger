@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "smpl-logger"
 dynamic = ["version"]
-description = "Простая библиотека для логирования с цветным форматированием"
+description = "A simple logging library with colored output and file rotation support"
 readme = "README.md"
 authors = [
     {name = "greengoblinalex", email = "greengoblinalex@mail.ru"}

@@ -1,6 +1,6 @@
-# Smpl Logger
+# SiMPLe Logger
 
-A simple logging library with colored output and file rotation support.
+A simple logging library with colored output and file rotation support
 
 ## Installation
 
